@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海信投影仪 数据看板</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+.header { background: linear-gradient(135deg, #1a3a5c 0%, #1a5276 50%, #1a6e8e 100%); color: #fff; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+.header h1 { font-size: 22px; font-weight: 600; }
+.header .subtitle { font-size: 13px; opacity: 0.7; margin-top: 4px; }
+.btn { padding: 7px 16px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; font-size: 12px; color: #fff; background: transparent; }
+.btn:hover { background: rgba(255,255,255,0.1); }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+/* KPI Cards */
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+.kpi-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 3px solid #667eea; }
+.kpi-card .label { font-size: 11px; color: #888; margin-bottom: 6px; }
+.kpi-card .value { font-size: 24px; font-weight: 700; }
+.kpi-card .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+.kpi-card.c1 { border-left-color: #4e79a7; } .kpi-card.c1 .value { color: #4e79a7; }
+.kpi-card.c2 { border-left-color: #59a14f; } .kpi-card.c2 .value { color: #59a14f; }
+.kpi-card.c3 { border-left-color: #f28e2b; } .kpi-card.c3 .value { color: #f28e2b; }
+.kpi-card.c4 { border-left-color: #e15759; } .kpi-card.c4 .value { color: #e15759; }
+.kpi-card.c5 { border-left-color: #76b7b2; } .kpi-card.c5 .value { color: #76b7b2; }
+
+/* Charts */
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.chart-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #333; }
+
+/* Tables */
+.mini-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.mini-table th { background: #f8f9fa; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #e0e0e0; font-size: 11px; }
+.mini-table td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; }
+.mini-table tr:hover td { background: #fafbfc; }
+.mini-table .num { text-align: right; }
+.mini-table a { color: #4e79a7; text-decoration: none; }
+.mini-table a:hover { text-decoration: underline; }
+
+.data-note { margin-top: 12px; font-size: 11px; color: #bbb; text-align: center; }
+
+@media (max-width: 900px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } .chart-row { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>海信投影仪 数据看板</h1>
+    <div class="subtitle">西班牙市场 · 累计汇总</div>
+  </div>
+  <div>
+    <button class="btn" onclick="window.open('https://thothstars.feishu.cn/wiki/VKQpwknyuikHWjkYYZWcBsBxnKg?sheet=b9d5f2')">飞书提报表</button>
+    <button class="btn" onclick="window.print()" style="margin-left:8px">打印 / PDF</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- KPI 卡片 -->
+  <div class="kpi-row">
+    <div class="kpi-card c1"><div class="label">提报达人总数</div><div class="value" id="kpi-submitted">-</div><div class="sub">西班牙市场</div></div>
+    <div class="kpi-card c2"><div class="label">客户选中</div><div class="value" id="kpi-selected">-</div><div class="sub" id="kpi-selected-sub"></div></div>
+    <div class="kpi-card c3"><div class="label">选中率</div><div class="value" id="kpi-rate">-</div><div class="sub" id="kpi-rate-sub"></div></div>
+    <div class="kpi-card c4"><div class="label">对客总额</div><div class="value" id="kpi-client">-</div><div class="sub">USD</div></div>
+    <div class="kpi-card c5"><div class="label">总利润</div><div class="value" id="kpi-profit">-</div><div class="sub">USD</div></div>
+  </div>
+
+  <!-- Row 1: 提报明细 + 选中明细 -->
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>提报达人（<span id="tbl-count">0</span> 位）</h3>
+      <div style="overflow-x:auto">
+        <table class="mini-table" id="submitted-table">
+          <thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝</th><th>均播</th><th class="num">成本</th><th class="num">对客价</th><th>状态</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>客户选中（<span id="sel-count">0</span> 位）</h3>
+      <div style="overflow-x:auto">
+        <table class="mini-table" id="selected-table">
+          <thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝</th><th class="num">最终成本</th><th class="num">对客价</th><th class="num">利润</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-note">
+    提报: <span id="footer-submitted"></span>条 · 选中: <span id="footer-selected"></span>条 · 更新时间: <span id="update-time"></span>
+    &nbsp;|&nbsp; <a href="https://thothstars.feishu.cn/wiki/VKQpwknyuikHWjkYYZWcBsBxnKg?sheet=b9d5f2" target="_blank">飞书提报表</a>
+  </div>
+</div>
+
+<script>
+// ===== 嵌入数据 =====
+const D = {"summary":{"totalSubmitted":9,"totalSelected":1,"totalConfirmed":1,"selectedRate":11.1,"confTotalClient":1500,"confTotalCost":230,"confTotalProfit":1270},"records":[{"country":"西班牙","handle":"decorbymaggie","platform":"TT","type":"生活家居/生活方式","followers":"673","avgViews":"80","cost":1400,"clientPrice":2200,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"laitadigital","platform":"YTB short,INS Reel,TT","type":"3C测评","followers":"350","avgViews":"30","cost":0,"clientPrice":1000,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"gc_tech8","platform":"TT","type":"3C测评","followers":"352","avgViews":"8","cost":1630,"clientPrice":2500,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"guideinformatica","platform":"TT","type":"3C测评","followers":"270","avgViews":"15","cost":580,"clientPrice":1200,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"alejandrovalledor","platform":"TT","type":"3C测评","followers":"102","avgViews":"15","cost":2000,"clientPrice":2000,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"chrisxbarker","platform":"TT","type":"3C测评","followers":"1000","avgViews":"20","cost":230,"clientPrice":1500,"finalPush":"推进","isSelected":true},{"country":"西班牙","handle":"sarayvlogs","platform":"TT","type":"家庭；日常分享","followers":"199","avgViews":"15","cost":1200,"clientPrice":1800,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"toni_reboredo","platform":"YTB short,INS Reel,TT","type":"3C测评","followers":"572","avgViews":"10","cost":1974,"clientPrice":2100,"finalPush":"","isSelected":false},{"country":"西班牙","handle":"gianfribul","platform":"TT","type":"3C测评","followers":"861","avgViews":"5","cost":1045,"clientPrice":1800,"finalPush":"","isSelected":false}],"selected":[{"country":"西班牙","handle":"chrisxbarker","platform":"TT","type":"3C测评","followers":"1000","avgViews":"20","finalCost":230,"clientPrice":1500,"profit":1270,"profitRate":84.7}]};
+
+// ===== 更新 KPI =====
+function updateKPIs() {
+  var s = D.summary;
+  document.getElementById('kpi-submitted').textContent = s.totalSubmitted;
+  document.getElementById('kpi-selected').textContent = s.totalSelected;
+  document.getElementById('kpi-selected-sub').textContent = '占提报 ' + s.selectedRate + '%';
+  document.getElementById('kpi-rate').textContent = s.selectedRate + '%';
+  document.getElementById('kpi-rate-sub').textContent = s.totalSelected + '/' + s.totalSubmitted + ' 提报';
+  document.getElementById('kpi-client').textContent = '$' + s.confTotalClient.toLocaleString();
+  document.getElementById('kpi-profit').textContent = '$' + s.confTotalProfit.toLocaleString();
+
+  // 提报表
+  document.getElementById('tbl-count').textContent = D.records.length;
+  document.querySelector('#submitted-table tbody').innerHTML = D.records.map(function(r) {
+    var status = r.isSelected ? '<span style="color:#59a14f;font-weight:600">✓ 选中</span>' : '<span style="color:#999">-</span>';
+    return '<tr><td><a href="' + r.link + '" target="_blank">@' + r.handle + '</a></td><td>' + r.platform + '</td><td>' + r.type + '</td><td>' + r.followers + 'K</td><td>' + r.avgViews + 'K</td><td class="num">$' + (r.cost||0).toLocaleString() + '</td><td class="num">$' + (r.clientPrice||0).toLocaleString() + '</td><td>' + status + '</td></tr>';
+  }).join('');
+
+  // 选中表
+  document.getElementById('sel-count').textContent = D.selected.length;
+  document.querySelector('#selected-table tbody').innerHTML = D.selected.map(function(c) {
+    return '<tr><td><a href="' + c.link + '" target="_blank">@' + c.handle + '</a></td><td>' + c.platform + '</td><td>' + c.type + '</td><td>' + c.followers + 'K</td><td class="num">$' + c.finalCost.toLocaleString() + '</td><td class="num">$' + c.clientPrice.toLocaleString() + '</td><td class="num" style="color:#59a14f;font-weight:600">$' + c.profit.toLocaleString() + '</td></tr>';
+  }).join('');
+
+  // Footer
+  document.getElementById('footer-submitted').textContent = s.totalSubmitted;
+  document.getElementById('footer-selected').textContent = s.totalSelected;
+  document.getElementById('update-time').textContent = new Date().toLocaleString('zh-CN');
+}
+
+updateKPIs();
+</script>
+</body>
+</html>
