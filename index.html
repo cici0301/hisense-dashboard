@@ -5,133 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hisense 投影仪 · 项目看板</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; }
-.header { background: linear-gradient(135deg, #1a3a5c 0%, #1a5276 50%, #1a6e8e 100%); color: #fff; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
-.header h1 { font-size: 22px; font-weight: 600; }
-.header .subtitle { font-size: 13px; opacity: 0.7; margin-top: 4px; }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-/* Cards */
-.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.card h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: #333; }
-
-/* Metrics */
-.metric { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
-.metric:last-child { border-bottom: none; }
-.metric .val { font-weight: 600; }
-.metric .val.g { color: #59a14f; }
-.metric .val.o { color: #f28e2b; }
-.chip { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-.chip.done { background: #e8f5e9; color: #2e7d32; }
-.chip.wait { background: #fff3e0; color: #e65100; }
-.chip.info { background: #e3f2fd; color: #1565c0; }
-
-/* Checklist */
-.clist { list-style: none; }
-.clist li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; display: flex; align-items: center; gap: 8px; }
-.clist .cb { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #ccc; flex-shrink: 0; text-align: center; line-height: 16px; font-size: 11px; }
-.clist .cb.done { background: #59a14f; border-color: #59a14f; color: #fff; }
-
-/* KPI row */
-.kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
-.kpi-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 3px solid #ccc; }
-.kpi-card.c1 { border-left-color: #4e79a7; } .kpi-card.c1 .value { color: #4e79a7; }
-.kpi-card.c2 { border-left-color: #59a14f; } .kpi-card.c2 .value { color: #59a14f; }
-.kpi-card.c3 { border-left-color: #f28e2b; } .kpi-card.c3 .value { color: #f28e2b; }
-.kpi-card.c4 { border-left-color: #e15759; } .kpi-card.c4 .value { color: #e15759; }
-.kpi-card.c5 { border-left-color: #76b7b2; } .kpi-card.c5 .value { color: #76b7b2; }
-.kpi-card.c6 { border-left-color: #b07aa1; } .kpi-card.c6 .value { color: #b07aa1; }
-.kpi-card .label { font-size: 11px; color: #888; margin-bottom: 6px; }
-.kpi-card .value { font-size: 24px; font-weight: 700; }
-.kpi-card .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
-
-.mini-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.mini-table th { background: #f8f9fa; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #e0e0e0; font-size: 11px; }
-.mini-table td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; }
-.mini-table tr:hover td { background: #fafbfc; }
-.mini-table a { color: #4e79a7; text-decoration: none; }
-
-.data-note { margin-top: 12px; font-size: 11px; color: #bbb; text-align: center; }
-
-@media (max-width: 900px) { .chart-row, .pipeline { grid-template-columns: 1fr; } }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f0f2f5; color:#1a1a2e; }
+.header { background:linear-gradient(135deg,#1a3a5c,#1a5276); color:#fff; padding:18px 28px; }
+.header h1 { font-size:20px; }
+.header .sub { font-size:12px; opacity:.7; margin-top:3px; }
+.container { max-width:1100px; margin:0 auto; padding:16px; }
+.kpi-row { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:14px; }
+.kpi-card { background:#fff; border-radius:8px; padding:14px; box-shadow:0 1px 3px rgba(0,0,0,.05); border-left:3px solid #ccc; }
+.kpi-card.c1 { border-left-color:#4e79a7; } .c1 .v { color:#4e79a7; }
+.kpi-card.c2 { border-left-color:#59a14f; } .c2 .v { color:#59a14f; }
+.kpi-card.c3 { border-left-color:#f28e2b; } .c3 .v { color:#f28e2b; }
+.kpi-card.c4 { border-left-color:#e15759; } .c4 .v { color:#e15759; }
+.kpi-card.c5 { border-left-color:#76b7b2; } .c5 .v { color:#76b7b2; }
+.kpi-card.c6 { border-left-color:#b07aa1; } .c6 .v { color:#b07aa1; }
+.kpi-card .l { font-size:11px; color:#888; margin-bottom:4px; }
+.kpi-card .v { font-size:22px; font-weight:700; }
+.kpi-card .s { font-size:10px; color:#aaa; margin-top:2px; }
+.row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+.card { background:#fff; border-radius:8px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+.card h3 { font-size:13px; margin-bottom:12px; color:#333; }
+.m { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid #f0f0f0; font-size:12px; }
+.m:last-child { border-bottom:none; }
+.m .val { font-weight:600; }
+.g { color:#59a14f; }
+.clist { list-style:none; }
+.clist li { padding:7px 0; border-bottom:1px solid #f0f0f0; font-size:12px; display:flex; align-items:center; gap:8px; }
+.cb { width:18px; height:18px; border-radius:4px; border:2px solid #ccc; flex-shrink:0; text-align:center; line-height:15px; font-size:11px; }
+.cb.done { background:#59a14f; border-color:#59a14f; color:#fff; }
+table { width:100%; border-collapse:collapse; font-size:11px; }
+th { background:#f8f9fa; padding:7px 8px; text-align:left; font-weight:600; color:#555; border-bottom:2px solid #e0e0e0; font-size:10px; }
+td { padding:6px 8px; border-bottom:1px solid #f0f0f0; }
+tr:hover td { background:#fafbfc; }
+a { color:#4e79a7; text-decoration:none; }
+.ft { text-align:center; color:#bbb; font-size:10px; margin-top:12px; }
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}.row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div>
-    <h1>Hisense 投影仪 · 西班牙</h1>
-    <div class="subtitle">项目进度看板</div>
-  </div>
-</div>
-
+<div class="header"><div><h1>Hisense 投影仪 · 西班牙</h1><div class="sub">项目进度看板</div></div></div>
 <div class="container">
-  <!-- KPI -->
-  <div class="kpi-row">
-    <div class="kpi-card c1"><div class="label">合作金额</div><div class="value">$1,500</div><div class="sub">对客报价</div></div>
-    <div class="kpi-card c2"><div class="label">利润</div><div class="value">$1,270</div><div class="sub">84.7% 利润率</div></div>
-    <div class="kpi-card c3"><div class="label">成本</div><div class="value">$230</div><div class="sub">TT + INS Reel</div></div>
-    <div class="kpi-card c4"><div class="label">选中人数</div><div class="value" id="kpi-selected">-</div><div class="sub">提报 <span id="kpi-total2">-</span> 人</div></div>
-    <div class="kpi-card c5"><div class="label">利润率</div><div class="value">84.7%</div><div class="sub">$1,270 / $1,500</div></div>
-    <div class="kpi-card c6"><div class="label">提报总数</div><div class="value" id="kpi-total">-</div><div class="sub">西班牙市场</div></div>
-  </div>
-
-  <!-- 达人 + Checklist -->
-  <div class="chart-row">
-    <div class="card">
-      <h3>🎯 @chrisxbarker</h3>
-      <div class="metric"><span>达人类型</span><span class="val">3C测评 → 投影仪高度匹配</span></div>
-      <div class="metric"><span>平台</span><span class="val">TT + INS Reel 双平台</span></div>
-      <div class="metric"><span>粉丝</span><span class="val">1,000K（1M）</span></div>
-      <div class="metric"><span>近十条均播</span><span class="val">20K</span></div>
-      <div class="metric"><span>西班牙受众占比</span><span class="val g">53.9%</span></div>
-      <div class="metric"><span>互动率</span><span class="val">2.0%</span></div>
-      <div class="metric"><span>CPM</span><span class="val g">$11.50</span></div>
-      <div class="metric"><span>成本 / 对客价</span><span class="val">$230 / $1,500</span></div>
-    </div>
-    <div class="card">
-      <h3>✅ 交付 Checklist</h3>
-      <ul class="clist" id="checklist">
-        <!-- filled from D.checklist -->
-      </ul>
-    </div>
-  </div>
-
-  <!-- 提报池 -->
-  <div class="card">
-    <h3>📋 提报达人池（<span id="tbl-count">0</span> 人）</h3>
-    <div style="overflow-x:auto;margin-top:8px">
-      <table class="mini-table" id="submitted-table">
-        <thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝(K)</th><th>均播(K)</th><th>西班牙%</th><th style="text-align:right">成本</th><th style="text-align:right">对客</th><th>状态</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="data-note">更新时间: <span id="update-time"></span> · 数据源: 飞书 Wiki</div>
+<div class="kpi-row">
+<div class="kpi-card c1"><div class="l">合作金额</div><div class="v">$1,500</div><div class="s">对客报价</div></div>
+<div class="kpi-card c2"><div class="l">利润</div><div class="v">$1,270</div><div class="s">84.7% 利润率</div></div>
+<div class="kpi-card c3"><div class="l">成本</div><div class="v">$230</div><div class="s">TT + INS Reel</div></div>
+<div class="kpi-card c4"><div class="l">选中人数</div><div class="v" id="ksel">1</div><div class="s">提报 <span id="kt2">13</span> 人</div></div>
+<div class="kpi-card c5"><div class="l">利润率</div><div class="v">84.7%</div><div class="s">$1,270 / $1,500</div></div>
+<div class="kpi-card c6"><div class="l">提报总数</div><div class="v" id="ktt">13</div><div class="s">西班牙市场</div></div>
 </div>
-
+<div class="row">
+<div class="card">
+<h3>🎯 @chrisxbarker</h3>
+<div class="m"><span>达人类型</span><span class="val">3C测评</span></div>
+<div class="m"><span>平台</span><span class="val">INS Reel + TT</span></div>
+<div class="m"><span>粉丝</span><span class="val">1,000K（1M）</span></div>
+<div class="m"><span>近十条均播</span><span class="val">20K</span></div>
+<div class="m"><span>西班牙受众</span><span class="val g">53.9%</span></div>
+<div class="m"><span>互动率</span><span class="val">2.0%</span></div>
+<div class="m"><span>CPM</span><span class="val g">$11.50</span></div>
+<div class="m"><span>成本 / 对客价</span><span class="val">$230 / $1,500</span></div>
+</div>
+<div class="card">
+<h3>✅ 交付 Checklist</h3>
+<ul class="clist" id="cl"></ul>
+</div>
+</div>
+<div class="card">
+<h3>📋 提报达人池（<span id="rc">0</span> 人）</h3>
+<div style="overflow-x:auto;margin-top:8px">
+<table><thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝(K)</th><th>均播(K)</th><th>西班牙%</th><th>成本</th><th>对客</th><th>状态</th></tr></thead>
+<tbody id="tb"></tbody></table>
+</div>
+</div>
+<div class="ft">更新时间: <span id="ut"></span> · 数据源: 飞书 Wiki</div>
+</div>
 <script>
-const D = {"summary": {"totalSubmitted": 13, "totalSelected": 1, "totalConfirmed": 1, "confAvgRate": 84.7, "selectedRate": 7.7, "confTotalClient": 1500, "confTotalCost": 230, "confTotalProfit": 1270}, "records": [{"country": "\u897f\u73ed\u7259", "handle": "decorbymaggie", "platform": "TT ", "link": "https://www.tiktok.com/@decorbymaggie", "type": "\u751f\u6d3b\u5bb6\u5c45/\u751f\u6d3b\u65b9\u5f0f", "followers": "673", "avgViews": "80", "countryPct": "56.3% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 1400, "clientPrice": 2200, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "laitadigital", "platform": "YTB short,INS Reel,TT ", "link": "https://www.tiktok.com/@laitadigital\nhttps://www.instagram.com/laitadigital/\nhttps://www.youtube.com/@laitadigital/shorts", "type": "3C\u6d4b\u8bc4", "followers": "350", "avgViews": "30", "countryPct": "68.2% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 0, "clientPrice": 1000, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "gc_tech8", "platform": "TT ", "link": "https://www.tiktok.com/@gc_tech8", "type": "3C\u6d4b\u8bc4", "followers": "352", "avgViews": "8", "countryPct": "59.7% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 1630, "clientPrice": 2500, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "guideinformatica", "platform": "TT ", "link": "https://www.tiktok.com/@guideinformatica", "type": "3C\u6d4b\u8bc4", "followers": "270", "avgViews": "15", "countryPct": "69.3% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 580, "clientPrice": 1200, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "alejandrovalledor", "platform": "TT ", "link": "https://www.tiktok.com/@alejandrovalledor", "type": "3C\u6d4b\u8bc4", "followers": "102", "avgViews": "15", "countryPct": "55.6% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 2000, "clientPrice": 2000, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "chrisxbarker", "platform": "TT ", "link": "https://www.tiktok.com/@chrisxbarker", "type": "3C\u6d4b\u8bc4", "followers": "1000", "avgViews": "20", "countryPct": "53.9% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 230, "clientPrice": 1500, "finalPush": "", "deliveryStatus": "", "isSelected": true}, {"country": "\u897f\u73ed\u7259", "handle": "sarayvlogs", "platform": "TT ", "link": "https://www.tiktok.com/@sarayvlogs", "type": "\u5bb6\u5ead\uff1b\u65e5\u5e38\u5206\u4eab", "followers": "199", "avgViews": "15", "countryPct": "43.1% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 1200, "clientPrice": 1800, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "toni_reboredo", "platform": "YTB short,INS Reel,TT ", "link": "https://www.tiktok.com/@toni_reboredo", "type": "3C\u6d4b\u8bc4", "followers": "572", "avgViews": "10", "countryPct": "55.6% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 1974, "clientPrice": 2100, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "gianfribul", "platform": "TT ", "link": "https://www.tiktok.com/@gianfribul", "type": "3C\u6d4b\u8bc4", "followers": "861", "avgViews": "5", "countryPct": "65.1% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 1045, "clientPrice": 1800, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "decorandomeelalma", "platform": "TT ", "link": "https://www.tiktok.com/@decorandomeelalma", "type": "\u751f\u6d3b\u5bb6\u5c45", "followers": "409", "avgViews": "20", "countryPct": "54.8% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 0, "clientPrice": 1500, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "byxexii", "platform": "TT ", "link": "https://www.tiktok.com/@byxexii", "type": "\u751f\u6d3bvlog", "followers": "224", "avgViews": "15", "countryPct": "68.9% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 350, "clientPrice": 1200, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "snoflaa", "platform": "TT ", "link": "https://www.tiktok.com/@snoflaa", "type": "3C\u6d4b\u8bc4", "followers": "2400", "avgViews": "112", "countryPct": "55.7% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 600, "clientPrice": 2000, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "\u897f\u73ed\u7259", "handle": "nataliaosona", "platform": "TT ", "link": "https://www.tiktok.com/@nataliaosona", "type": "\u751f\u6d3b\u65b9\u5f0f", "followers": "747", "avgViews": "90", "countryPct": "57.8% \u897f\u73ed\u7259", "willing": "\u662f", "cost": 2094, "clientPrice": 2500, "finalPush": "", "deliveryStatus": "", "isSelected": false}], "selected": [{"country": "\u897f\u73ed\u7259", "handle": "chrisxbarker", "platform": "INS Reel,TT", "type": "3C\u6d4b\u8bc4", "followers": "1000", "avgViews": "20", "finalCost": 230, "clientPrice": 1500, "profit": 1270, "profitRate": 84.7}], "checklist": [{"task": "\u5408\u540c\u7b7e\u7f72", "status": "\u5df2\u5b8c\u6210"}, {"task": "\u4ea7\u54c1\u5bc4\u9001", "status": ""}, {"task": "\u811a\u672c/\u521d\u7a3f/\u4fee\u6539\u7a3f/\u5b9a\u7a3f", "status": ""}, {"task": "\u7b2c\u4e00\u6761\u89c6\u9891\u53d1\u5e03\uff086.15-6.20\uff09", "status": ""}, {"task": "\u53d1\u5e03\u622a\u56fe/\u6570\u636e\u56de\u4f20", "status": ""}, {"task": "\u7ed3\u7b97\u4ed8\u6b3e", "status": ""}, {"task": "\u7b2c\u4e8c\u6761\u89c6\u9891\u53d1\u5e03\uff088\u6708\uff09", "status": ""}, {"task": "\u7b2c\u4e09\u6761\u89c6\u9891\u53d1\u5e03\uff0811-12\u6708\uff09", "status": ""}]}
-  });
+var D = {"summary": {"totalSubmitted": 13, "totalSelected": 1, "totalConfirmed": 1, "confAvgRate": 84.7, "selectedRate": 7.7, "confTotalClient": 1500, "confTotalCost": 230, "confTotalProfit": 1270}, "records": [{"country": "西班牙", "handle": "decorbymaggie", "platform": "TT ", "link": "https://www.tiktok.com/@decorbymaggie", "type": "生活家居/生活方式", "followers": "673", "avgViews": "80", "countryPct": "56.3% 西班牙", "willing": "是", "cost": 1400, "clientPrice": 2200, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "laitadigital", "platform": "YTB short,INS Reel,TT ", "link": "https://www.tiktok.com/@laitadigital\nhttps://www.instagram.com/laitadigital/\nhttps://www.youtube.com/@laitadigital/shorts", "type": "3C测评", "followers": "350", "avgViews": "30", "countryPct": "68.2% 西班牙", "willing": "是", "cost": 0, "clientPrice": 1000, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "gc_tech8", "platform": "TT ", "link": "https://www.tiktok.com/@gc_tech8", "type": "3C测评", "followers": "352", "avgViews": "8", "countryPct": "59.7% 西班牙", "willing": "是", "cost": 1630, "clientPrice": 2500, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "guideinformatica", "platform": "TT ", "link": "https://www.tiktok.com/@guideinformatica", "type": "3C测评", "followers": "270", "avgViews": "15", "countryPct": "69.3% 西班牙", "willing": "是", "cost": 580, "clientPrice": 1200, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "alejandrovalledor", "platform": "TT ", "link": "https://www.tiktok.com/@alejandrovalledor", "type": "3C测评", "followers": "102", "avgViews": "15", "countryPct": "55.6% 西班牙", "willing": "是", "cost": 2000, "clientPrice": 2000, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "chrisxbarker", "platform": "TT ", "link": "https://www.tiktok.com/@chrisxbarker", "type": "3C测评", "followers": "1000", "avgViews": "20", "countryPct": "53.9% 西班牙", "willing": "是", "cost": 230, "clientPrice": 1500, "finalPush": "", "deliveryStatus": "", "isSelected": true}, {"country": "西班牙", "handle": "sarayvlogs", "platform": "TT ", "link": "https://www.tiktok.com/@sarayvlogs", "type": "家庭；日常分享", "followers": "199", "avgViews": "15", "countryPct": "43.1% 西班牙", "willing": "是", "cost": 1200, "clientPrice": 1800, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "toni_reboredo", "platform": "YTB short,INS Reel,TT ", "link": "https://www.tiktok.com/@toni_reboredo", "type": "3C测评", "followers": "572", "avgViews": "10", "countryPct": "55.6% 西班牙", "willing": "是", "cost": 1974, "clientPrice": 2100, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "gianfribul", "platform": "TT ", "link": "https://www.tiktok.com/@gianfribul", "type": "3C测评", "followers": "861", "avgViews": "5", "countryPct": "65.1% 西班牙", "willing": "是", "cost": 1045, "clientPrice": 1800, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "decorandomeelalma", "platform": "TT ", "link": "https://www.tiktok.com/@decorandomeelalma", "type": "生活家居", "followers": "409", "avgViews": "20", "countryPct": "54.8% 西班牙", "willing": "是", "cost": 0, "clientPrice": 1500, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "byxexii", "platform": "TT ", "link": "https://www.tiktok.com/@byxexii", "type": "生活vlog", "followers": "224", "avgViews": "15", "countryPct": "68.9% 西班牙", "willing": "是", "cost": 350, "clientPrice": 1200, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "snoflaa", "platform": "TT ", "link": "https://www.tiktok.com/@snoflaa", "type": "3C测评", "followers": "2400", "avgViews": "112", "countryPct": "55.7% 西班牙", "willing": "是", "cost": 600, "clientPrice": 2000, "finalPush": "", "deliveryStatus": "", "isSelected": false}, {"country": "西班牙", "handle": "nataliaosona", "platform": "TT ", "link": "https://www.tiktok.com/@nataliaosona", "type": "生活方式", "followers": "747", "avgViews": "90", "countryPct": "57.8% 西班牙", "willing": "是", "cost": 2094, "clientPrice": 2500, "finalPush": "", "deliveryStatus": "", "isSelected": false}], "selected": [{"country": "西班牙", "handle": "chrisxbarker", "platform": "INS Reel,TT", "type": "3C测评", "followers": "1000", "avgViews": "20", "finalCost": 230, "clientPrice": 1500, "profit": 1270, "profitRate": 84.7}], "checklist": [{"task": "合同签署", "status": "已完成"}, {"task": "产品寄送", "status": ""}, {"task": "脚本/初稿/修改稿/定稿", "status": ""}, {"task": "第一条视频发布（6.15-6.20）", "status": ""}, {"task": "发布截图/数据回传", "status": ""}, {"task": "结算付款", "status": ""}, {"task": "第二条视频发布（8月）", "status": ""}, {"task": "第三条视频发布（11-12月）", "status": ""}]};
 
-  document.getElementById('tbl-count').textContent = D.records.length;
-document.querySelector('#submitted-table tbody').innerHTML = D.records.map(function(r) {
-  var s = r.isSelected ? '<span style="color:#59a14f;font-weight:600">✓ 选中</span>' : '<span style="color:#999">-</span>';
-  return '<tr><td><a href="' + (typeof r.link === 'string' ? r.link : '#') + '" target="_blank">@' + r.handle + '</a></td><td>' + r.platform + '</td><td>' + r.type + '</td><td>' + r.followers + '</td><td>' + r.avgViews + '</td><td>' + (r.countryPct||'-') + '</td><td style="text-align:right">$' + (r.cost||0).toLocaleString() + '</td><td style="text-align:right">$' + (r.clientPrice||0).toLocaleString() + '</td><td>' + s + '</td></tr>';
-}).join('');
-// Update checklist from data
-  var checklist = D.checklist || [];
-  for (var i = 0; i < checklist.length; i++) {
-    var el = document.getElementById('cl-' + i);
-    if (el && checklist[i].status) {
-      el.className = 'cb done';
-      el.textContent = '✓';
-    }
-  }
-  document.getElementById('update-time').textContent = new Date().toLocaleString('zh-CN');
+// Checklist
+(function(){
+var h='';
+(D.checklist||[]).forEach(function(x){
+var d=!!(x.status&&x.status!=='');
+h+='<li><span class="cb'+(d?' done':'')+'">'+(d?'✓':'☐')+'</span> '+x.task+'</li>';
+});
+document.getElementById('cl').innerHTML=h;
+})();
+
+// Table
+document.getElementById('rc').textContent=D.records.length;
+document.getElementById('ktt').textContent=D.summary.totalSubmitted;
+document.getElementById('kt2').textContent=D.summary.totalSubmitted;
+document.getElementById('ksel').textContent=D.summary.totalSelected;
+
+(function(){
+var h='';
+D.records.forEach(function(r){
+var s=r.isSelected?'<span style="color:#59a14f;font-weight:600">✓ 选中</span>':'<span style="color:#999">-</span>';
+var lk=typeof r.link==='string'?r.link:'#';
+h+='<tr><td><a href="'+lk+'" target="_blank">@'+r.handle+'</a></td><td>'+r.platform+'</td><td>'+r.type+'</td><td>'+r.followers+'</td><td>'+r.avgViews+'</td><td>'+(r.countryPct||'-')+'</td><td style="text-align:right">$'+(r.cost||0).toLocaleString()+'</td><td style="text-align:right">$'+(r.clientPrice||0).toLocaleString()+'</td><td>'+s+'</td></tr>';
+});
+document.getElementById('tb').innerHTML=h;
+})();
+
+document.getElementById('ut').textContent=new Date().toLocaleString('zh-CN');
 </script>
 </body>
 </html>
