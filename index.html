@@ -45,6 +45,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 @media (max-width: 900px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } .chart-row { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+
+/* Influencer focus card */
+.focus-card { background: linear-gradient(135deg, #1a5276, #1a6e8e); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.focus-card h3 { font-size: 18px; margin-bottom: 16px; }
+.focus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.focus-item { text-align: center; }
+.focus-item .num { font-size: 28px; font-weight: 700; }
+.focus-item .lbl { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+
+/* Analysis grid */
+.analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.analysis-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.analysis-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #333; }
+.metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.metric-row:last-child { border-bottom: none; }
+.metric-row .val { font-weight: 600; }
+.metric-row .val.good { color: #59a14f; }
+.metric-row .val.warn { color: #f28e2b; }
+.tag { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; margin: 3px; background: #e8f4f8; color: #1a5276; }
+
+
+.focus-card { background: linear-gradient(135deg, #1a5276, #1a6e8e); color: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.focus-card h3 { font-size: 18px; margin-bottom: 16px; }
+.focus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.focus-item { text-align: center; }
+.focus-item .num { font-size: 28px; font-weight: 700; }
+.focus-item .lbl { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+.analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.analysis-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.analysis-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #333; }
+.metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.metric-row:last-child { border-bottom: none; }
+.metric-row .val { font-weight: 600; }
+.metric-row .val.good { color: #59a14f; }
+.tag { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; margin: 3px; background: #e8f4f8; color: #1a5276; }
+
 </style>
 </head>
 <body>
@@ -71,25 +107,71 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="kpi-card c6"><div class="label">利润率</div><div class="value" id="kpi-rate-profit">-</div><div class="sub" id="kpi-rate-profit-sub"></div></div>
   </div>
 
-  <!-- Row 1: 提报明细 + 选中明细 -->
-  <div class="chart-row">
-    <div class="chart-card">
-      <h3>提报达人（<span id="tbl-count">0</span> 位）</h3>
-      <div style="overflow-x:auto">
-        <table class="mini-table" id="submitted-table">
-          <thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝</th><th>均播</th><th class="num">成本</th><th class="num">对客价</th><th>状态</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
+  <!-- 达人聚焦：chrisxbarker -->
+  <div class="focus-card">
+    <h3>🎯 客户选中达人：@chrisxbarker</h3>
+    <div class="focus-grid">
+      <div class="focus-item"><div class="num">1M</div><div class="lbl">粉丝数（TT）</div></div>
+      <div class="focus-item"><div class="num">20K</div><div class="lbl">近十条均播</div></div>
+      <div class="focus-item"><div class="num">53.9%</div><div class="lbl">西班牙受众</div></div>
+      <div class="focus-item"><div class="num">84.7%</div><div class="lbl">利润率</div></div>
     </div>
-    <div class="chart-card">
-      <h3>客户选中（<span id="sel-count">0</span> 位）</h3>
-      <div style="overflow-x:auto">
-        <table class="mini-table" id="selected-table">
-          <thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝</th><th class="num">最终成本</th><th class="num">对客价</th><th class="num">利润</th></tr></thead>
-          <tbody></tbody>
-        </table>
+  </div>
+
+  <!-- Row 1: 合作价值分析 -->
+  <div class="analysis-row">
+    <div class="analysis-card">
+      <h3>📊 合作成本结构</h3>
+      <div class="metric-row"><span>红人最终成本</span><span class="val">$230</span></div>
+      <div class="metric-row"><span>对客报价</span><span class="val">$1,500</span></div>
+      <div class="metric-row"><span>毛利润</span><span class="val good">$1,270</span></div>
+      <div class="metric-row"><span>利润率</span><span class="val good">84.7%</span></div>
+      <div class="metric-row"><span>合作形式</span><span class="val">INS Reel + TT</span></div>
+    </div>
+    <div class="analysis-card">
+      <h3>📈 达人数据健康度</h3>
+      <div class="metric-row"><span>粉丝数</span><span class="val">1,000K（1M）</span></div>
+      <div class="metric-row"><span>近十条均播</span><span class="val">20K</span></div>
+      <div class="metric-row"><span>互动率（均播/粉丝）</span><span class="val">2%</span></div>
+      <div class="metric-row"><span>西班牙受众占比</span><span class="val good">53.9%</span></div>
+      <div class="metric-row"><span>达人合作意愿</span><span class="val good">是</span></div>
+    </div>
+  </div>
+
+  <!-- Row 2: 内容匹配 + 提报明细 -->
+  <div class="analysis-row">
+    <div class="analysis-card">
+      <h3>🏷️ 内容标签 & 匹配度</h3>
+      <div style="margin-bottom:12px">
+        <span class="tag">3C测评</span>
+        <span class="tag">科技产品</span>
+        <span class="tag">消费电子</span>
+        <span class="tag">西班牙语</span>
+        <span class="tag">投影仪/显示</span>
       </div>
+      <div class="metric-row"><span>达人类型</span><span class="val">3C测评</span></div>
+      <div class="metric-row"><span>与投影仪产品匹配度</span><span class="val good">高</span></div>
+      <div class="metric-row"><span>受众地域匹配</span><span class="val good">西班牙 53.9%</span></div>
+      <div class="metric-row"><span>合作意愿</span><span class="val good">已确认</span></div>
+    </div>
+    <div class="analysis-card">
+      <h3>💰 性价比评估</h3>
+      <div class="metric-row"><span>CPM（千次曝光成本）</span><span class="val good">$11.50</span></div>
+      <div class="metric-row"><span>单粉成本</span><span class="val good">$0.23</span></div>
+      <div class="metric-row"><span>预估曝光量（近十条参考）</span><span class="val">20K/条</span></div>
+      <div class="metric-row"><span>双边发布（TT+INS）</span><span class="val good">额外覆盖</span></div>
+      <div class="metric-row"><span>ROI预估</span><span class="val good">极高（84.7%利润率）</span></div>
+    </div>
+  </div>
+
+  <!-- Row 3: 提报全表 -->
+  <div class="chart-card" style="margin-bottom:16px">
+    <h3>提报达人明细（<span id="tbl-count">0</span> 位）</h3>
+    <div style="overflow-x:auto">
+      <table class="mini-table" id="submitted-table">
+        <thead><tr><th>Handle</th><th>平台</th><th>类型</th><th>粉丝(K)</th><th>均播(K)</th><th>西班牙%</th><th class="num">成本</th><th class="num">对客价</th><th>状态</th></tr></thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
 
@@ -119,15 +201,11 @@ function updateKPIs() {
   // 提报表
   document.getElementById('tbl-count').textContent = D.records.length;
   document.querySelector('#submitted-table tbody').innerHTML = D.records.map(function(r) {
-    var status = r.isSelected ? '<span style="color:#59a14f;font-weight:600">✓ 选中</span>' : '<span style="color:#999">-</span>';
+    var status = r.isSelected ? '<span style="color:#59a14f;font-weight:600">✓</span>' : '<span style="color:#999">-</span>';
     return '<tr><td><a href="' + r.link + '" target="_blank">@' + r.handle + '</a></td><td>' + r.platform + '</td><td>' + r.type + '</td><td>' + r.followers + 'K</td><td>' + r.avgViews + 'K</td><td class="num">$' + (r.cost||0).toLocaleString() + '</td><td class="num">$' + (r.clientPrice||0).toLocaleString() + '</td><td>' + status + '</td></tr>';
   }).join('');
 
-  // 选中表
-  document.getElementById('sel-count').textContent = D.selected.length;
-  document.querySelector('#selected-table tbody').innerHTML = D.selected.map(function(c) {
-    return '<tr><td><a href="' + c.link + '" target="_blank">@' + c.handle + '</a></td><td>' + c.platform + '</td><td>' + c.type + '</td><td>' + c.followers + 'K</td><td class="num">$' + c.finalCost.toLocaleString() + '</td><td class="num">$' + c.clientPrice.toLocaleString() + '</td><td class="num" style="color:#59a14f;font-weight:600">$' + c.profit.toLocaleString() + '</td></tr>';
-  }).join('');
+
 
   // Footer
   document.getElementById('footer-submitted').textContent = s.totalSubmitted;
